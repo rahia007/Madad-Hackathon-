@@ -9,6 +9,8 @@ Designed as an **Installable Progressive Web App (PWA)** backed by **Express**, 
 > **Prototype & Ethics Disclosure**: This repository uses **synthetic Pakistani citizen records** and **explicitly labeled mock adapters** for identity lookup (NADRA-style registry), payment disbursement (Raast-style), and sandbox webhook receivers. It is a demonstration platform and is **not** an official government portal.
 
 ---
+**DEMO**
+https://madad-desk-929893404656.asia-southeast1.run.app
 
 ## Core Design Principles
 
