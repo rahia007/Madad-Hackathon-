@@ -1,0 +1,6 @@
+{
+  "name": "Madad Desk",
+  "description": "AI-powered, human-centered public service and relief platform with bilingual Urdu/English voice assistance, deterministic eligibility routing, scam detection, consent controls, and offline-first sync.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

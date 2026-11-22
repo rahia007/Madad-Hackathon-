@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Madad Desk (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9eee9;--sf:#f7f9f6;--ink:#12312b;--mut:#4d6660;--ln:#c5d1c9;--acc:#12312b;--on:#f7f9f6;--amb:#f2b01e;--red:#b3261e;--grn:#2e7d4f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1a17;--sf:#17261f;--ink:#e4efe8;--mut:#9db5aa;--ln:#2c4237;--acc:#f2b01e;--on:#12312b;--grn:#5cc78a;--red:#ff8a80}}
+:root[data-theme=dark]{--bg:#0f1a17;--sf:#17261f;--ink:#e4efe8;--mut:#9db5aa;--ln:#2c4237;--acc:#f2b01e;--on:#12312b;--grn:#5cc78a;--red:#ff8a80}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:17px/1.5 "Atkinson Hyperlegible",system-ui,Segoe UI,Arial,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:2px solid var(--ink)}
+h1{font-size:24px;margin:0}html[lang=ur] body{font-family:"Noto Naskh Arabic","Atkinson Hyperlegible",system-ui,sans-serif;line-height:1.9}.snd{font-size:28px;border-radius:99px;width:60px;height:60px;padding:0;background:var(--amb);border-color:var(--ink);color:#12312b}button:hover{filter:brightness(.95)}h1 small{font-weight:400;color:var(--mut);font-size:14px;margin-left:8px}
+h2{font-size:24px;margin:0 0 8px}h3{font-size:18px;margin:18px 0 6px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,input,textarea,button{font:inherit;color:var(--ink)}
+select,input,textarea{background:var(--sf);border:2px solid var(--ln);border-radius:6px;padding:10px 12px;width:100%}
+.bar select{width:auto}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--amb);outline-offset:1px}
+button{cursor:pointer;border:2px solid var(--ink);background:var(--sf);border-radius:6px;padding:10px 16px;font-weight:700}
+button.p{background:var(--acc);color:var(--on)}button.big{font-size:19px;padding:16px 22px}button.g{border-color:var(--ln);font-weight:400}
+.wrap{display:grid;grid-template-columns:200px 1fr;gap:0;max-width:1100px;margin:0 auto}
+nav{padding:16px 12px;display:flex;flex-direction:column;gap:4px;border-inline-end:1px solid var(--ln)}
+nav button{text-align:start;border:0;background:none;padding:12px;font-weight:400;border-radius:6px}
+nav button.on{background:var(--ink);color:var(--bg);font-weight:700}
+main{padding:20px;min-width:0}
+.card{background:var(--sf);border:1px solid var(--ln);border-inline-start:6px solid var(--ink);border-radius:14px;padding:18px;margin:0 0 16px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:block;font-weight:700;margin:10px 0 4px}
+.mut{color:var(--mut);font-size:15px}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:14px;font-weight:700;border:2px solid currentColor}
+.ok{color:var(--grn)}.bad{color:var(--red)}.warn{color:#9a6a00}
+@media(prefers-color-scheme:dark){.warn{color:var(--amb)}}
+.gauge{position:relative;height:30px;display:flex;border-radius:6px;overflow:hidden;border:2px solid var(--ink);margin:10px 0 24px}
+.gauge i{display:block;height:100%}.gauge b{position:absolute;top:-6px;width:4px;height:40px;background:var(--ink);border:2px solid var(--bg)}
+.gl{display:flex;font-size:13px;color:var(--mut);margin-top:-18px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:start;padding:8px 6px;border-bottom:1px solid var(--ln);vertical-align:top}
+.scroll{overflow-x:auto}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:8px;display:none;z-index:9;max-width:90%}
+.net{padding:6px 20px;background:var(--amb);color:#12312b;font-weight:700;display:none}
+@media(max-width:720px){.wrap{grid-template-columns:1fr}nav{flex-direction:row;overflow-x:auto;border-inline-end:0;border-bottom:1px solid var(--ln)}nav button{white-space:nowrap}}
+@media(prefers-reduced-motion:no-preference){.gauge b{transition:left .6s ease}}
+:root{--bg:#eef2f7;--sf:#fff;--ink:#14243b;--mut:#56657a;--ln:#d5dde8;--acc:#1b4f9c;--on:#fff;--grn:#13805a;--red:#c0392b}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1626;--sf:#16223a;--ink:#e8eef8;--mut:#9fb0c8;--ln:#2a3a57;--acc:#6ea8ff;--on:#0e1626;--grn:#4cd09a;--red:#ff8f85}}
+:root[data-theme=dark]{--bg:#0e1626;--sf:#16223a;--ink:#e8eef8;--mut:#9fb0c8;--ln:#2a3a57;--acc:#6ea8ff;--on:#0e1626;--grn:#4cd09a;--red:#ff8f85}
+body{font-size:18px}
+header{background:#14243b;color:#fff;border:0;padding:14px 20px}
+header label{color:#fff}header select,header button.g{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:8px 12px}header option{color:#14243b}
+h1{font-size:22px}h1 small{display:block;margin:2px 0 0;color:#aebbd0;font-size:13px}
+.wrap{display:block;max-width:780px;margin:0 auto}
+nav{flex-direction:row;overflow-x:auto;border:0;padding:16px 16px 0;gap:8px}
+nav button{white-space:nowrap;border:2px solid var(--ln);background:var(--sf);border-radius:99px;padding:8px 18px;font-weight:700}
+nav button.on{background:var(--acc);color:var(--on);border-color:var(--acc)}
+main{padding:16px}
+h2{font-size:26px;margin:8px 0 6px}
+.card{border:1px solid var(--ln);border-radius:18px;padding:22px;margin:0 0 18px}
+input,select,textarea{border-radius:10px;padding:14px;font-size:18px}
+button{border-radius:10px;border-width:2px}button.p{background:var(--acc);border-color:var(--acc);color:var(--on)}
+button.g{border-color:var(--ln);background:var(--sf)}
+.snd{background:var(--acc);border-color:var(--acc);color:#fff}
+.slip{border-top:10px solid var(--amb)}.slip.s-auto{border-top-color:var(--grn)}.slip.s-human{border-top-color:var(--acc)}
+.slip p:first-of-type{font-size:24px;font-weight:700}
+.tag{border-width:1px;background:transparent}
+.try{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+</style></head><body>
+<header><h1>🤝 مدد ڈیسک<small>Prototype, not an official service. All data is mock.</small></h1>
+<div class="bar"><label for="role" style="margin:0">Signed in as</label><select id="role" aria-label="Role"></select>
+<button class="g" id="lang">اردو</button><button class="g" id="net">Online</button><button class="g" id="rst" title="Reset demo data">↺</button></div></header>
+<div class="net" id="netbar">Offline: your work is saved on this phone and will send when the signal returns.</div>
+<div class="wrap"><nav id="nav"></nav><main id="main"></main></div><div id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s),H=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const REG=[{n:'Muhammad Aslam',c:'42101-1234567-1',a:54,i:18000},{n:'Fatima Bibi',c:'42201-7654321-2',a:47,i:12000},{n:'Mohammad Aslam',c:'42101-1234999-1',a:61,i:30000},{n:'Zainab Khatoon',c:'42301-5550001-2',a:66,i:9000}];
+const S={role:'citizen',tab:'apply',ur:true,off:false,queue:[],seq:100,
+ R:{v:1,maxIncome:25000,minAge:18,costWrong:10,costSlow:1,askBelow:.6},hist:[],cases:[],audit:[],
+ fam:[{n:'Fatima Bibi',h:true},{n:'Zainab Khatoon',h:true},{n:'Rukhsana Parveen',h:false}],share:{dept:true,bank:false},form:{},acting:'Fatima Bibi',rec:'Fatima Bibi',scam:null,twin:null};
+const ROLES={citizen:['apply','scam','data','cases'],helper:['families','apply','scam','cases'],officer:['queue'],admin:['rules','twin','svc'],auditor:['audit']};
+const NAMES={apply:'Apply for relief',scam:'Check a message',data:'My data',cases:'My cases',families:'My families',queue:'Review queue',rules:'Rules',twin:'Test a rule change',svc:'Mock services & API',audit:'Audit log'};
+const NU={apply:'درخواست دیں',scam:'پیغام جانچیں',data:'میرا ڈیٹا',cases:'میرے کیس',families:'میرے خاندان',queue:'جائزہ قطار',rules:'اصول',twin:'تبدیلی آزمائیں',svc:'سروسز اور API',audit:'آڈٹ لاگ'};
+const UM={auto:'منظور۔ آپ اہل ہیں۔',docs:'ابھی یقین نہیں۔ براہ کرم شناختی کارڈ کی صاف تصویر بھیجیں۔',human:'ایک افسر آپ کا کیس دیکھے گا۔ آپ کو کچھ کرنے کی ضرورت نہیں۔'};
+const SU={scam:['یہ دھوکہ لگتا ہے۔ نہ کلک کریں، نہ جواب دیں۔','اس میں پیسے، شناختی کارڈ یا کوڈ مانگا گیا ہے اور جلدی کرنے کو کہا گیا ہے۔ کوئی امدادی دفتر او ٹی پی نہیں مانگتا۔'],unsure:['ہمیں یقین نہیں۔ ایک افسر اسے دیکھے گا۔','کچھ نشانیاں دھوکے کی ہیں مگر پکا یقین نہیں۔ جب تک بتایا نہ جائے، کوئی کوڈ شیئر نہ کریں۔'],ok:['پیغام عام لگتا ہے، مگر او ٹی پی کسی کو نہ بتائیں۔','دھوکے کی کوئی مضبوط نشانی نہیں ملی۔']};
+const SU2={approved:'منظور','approved by officer':'افسر نے منظور کیا',rejected:'مسترد','in review':'جائزے میں','needs proof':'ثبوت درکار'};
+const PERM={apply:['citizen','helper'],review:['officer'],rules:['admin'],audit:['auditor']};
+const T=(e,u)=>S.ur?u:e, thr=R=>R.costWrong/(R.costWrong+R.costSlow);
+function log(a,x,d){S.audit.unshift({t:new Date().toLocaleTimeString(),a,x,d})}
+function guard(p){if(!PERM[p].includes(S.role)){log(S.role,'DENIED '+p,'server refused: role lacks permission');toast('Not allowed for your role.');return false}return true}
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3200)}
+function say(t){try{const sy=speechSynthesis;sy.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ur-PK';const v=sy.getVoices().find(v=>/^ur/i.test(v.lang));if(v)u.voice=v;else toast('اس فون میں اردو آواز نہیں ملی۔ سیٹنگز میں اردو آواز انسٹال کریں۔');u.rate=.85;sy.speak(u)}catch(e){toast('آواز دستیاب نہیں۔')}}
+const norm=s=>String(s).toLowerCase().replace(/\b(mohd|muhammed|mohammad|muhammad|mohamed|mohammed)\b/g,'muhammad').replace(/[^a-z ]/g,'').replace(/\s+/g,' ').trim();
+const lev=(a,b)=>{const m=[...Array(a.length+1)].map((_,i)=>[i]);for(let j=1;j<=b.length;j++)m[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]==b[j-1]?0:1));return m[a.length][b.length]};
+const sim=(a,b)=>{a=norm(a);b=norm(b);return a&&b?1-lev(a,b)/Math.max(a.length,b.length):0};
+
+function decide(x,R){
+ const T0=thr(R),miss=['name','cnic','age','income'].filter(k=>!String(x[k]||'').trim());
+ const tr=[`Rule v${R.v}: income up to ${R.maxIncome}, age ${R.minAge}+`,`Acts alone only at confidence ${T0.toFixed(2)} or more (wrong approval costs ${R.costWrong}, a delay costs ${R.costSlow})`];
+ if(miss.length)tr.push('Missing: '+miss.join(', '));
+ let rec=REG.find(r=>r.c===x.cnic),s=0,dup=false;
+ if(rec){s=x.name?sim(x.name,rec.n):.7;tr.push(`ID matched exactly; name similarity ${s.toFixed(2)}`)}
+ else if(x.name){const c=REG.map(r=>[r,sim(x.name,r.n)]).filter(a=>a[1]>=.8).sort((a,b)=>b[1]-a[1]);
+  if(c.length>1){dup=true;tr.push('Name fits '+c.length+' people on record; will not guess')}
+  if(c[0]){rec=c[0][0];s=c[0][1]*.8}}
+ let conf=s*(1-.12*miss.length);
+ if(rec&&x.income&&Math.abs(x.income-rec.i)/rec.i>.2){conf-=.25;tr.push(`Income given (${x.income}) differs from record (${rec.i})`)}
+ conf=Math.max(0,Math.min(1,conf));
+ const ok=!!rec&&rec.i<=R.maxIncome&&rec.a>=R.minAge;
+ let route;
+ if(!rec||dup||conf<R.askBelow)route='human';else if(conf<T0)route='docs';else route=ok?'auto':'human';
+ if(rec&&!ok)tr.push('Does not meet the rule. Rejections are never automatic.');
+ const msg={auto:[T('Approved. You qualify.','منظور۔ آپ اہل ہیں۔'),'ok'],docs:[T('Not sure yet. Please upload a clear photo of your ID.','ابھی یقین نہیں۔ براہ کرم شناختی کارڈ کی صاف تصویر بھیجیں۔'),'warn'],human:[T('A person will check your case. You do not need to do anything.','ایک افسر آپ کا کیس دیکھے گا۔ آپ کو کچھ کرنے کی ضرورت نہیں۔'),'warn']}[route];
+ return{route,conf,ok,tr,msg,rule:R.v,rec:rec&&rec.n,why:[!rec?'No matching record found.':dup?'This name fits more than one person.':!ok?'Income or age is outside the rule.':conf<T0?'Name or details differ slightly from the record.':'Everything matches the record.',!rec?'ریکارڈ میں آپ کا نام نہیں ملا۔':dup?'اس نام کے ایک سے زیادہ لوگ ہیں۔':!ok?'آمدن یا عمر اصول کے مطابق نہیں۔':conf<T0?'نام یا معلومات میں ریکارڈ سے تھوڑا فرق ہے۔':'سب معلومات ریکارڈ سے مل گئیں۔']}}
+
+const KEY='madad-v2';
+function save(){try{const{cases,audit,R,hist,seq,fam,share,queue,ur,off}=S;localStorage.setItem(KEY,JSON.stringify({cases,audit,R,hist,seq,fam,share,queue,ur,off}))}catch(e){}}
+function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j){Object.assign(S,j);S.loaded=1}}catch(e){}}
+function submit(x,by){
+ const k=x.name+'|'+x.cnic+'|'+by;
+ if(by==='Citizen'&&!S.share.dept){log(by,'DENIED send','citizen stopped sharing with the department');toast(T('You stopped sharing with the department. Turn it on in My data to apply.','آپ نے محکمے کو شیئر کرنا بند کیا ہے۔ درخواست کے لیے "میرا ڈیٹا" میں اسے چالو کریں۔'));return}
+ if(S.off){if(!S.queue.find(q=>q.k===k))S.queue.push({k,x:{...x},by});log(by,'QUEUED offline',x.name);toast('Saved on this phone. It will send when you are online.');return}
+ if(S.cases.find(c=>c.k===k)){toast('Already sent. No duplicate was created.');return}
+ const d=decide(x,S.R),c={id:'C-'+(++S.seq),k,x:{...x},by,d,st:d.route==='auto'?'approved':d.route==='docs'?'needs proof':'in review',v:S.R.v};
+ S.cases.unshift(c);log('AI engine','decision '+c.id,`${d.route} conf ${d.conf.toFixed(2)} rule v${S.R.v}`);S.last=c;render()}
+
+function gauge(conf,R){const t=thr(R)*100,a=R.askBelow*100;
+ return `<div class="gauge" role="img" aria-label="Confidence ${Math.round(conf*100)} percent"><i style="width:${a}%;background:var(--red);opacity:.55"></i><i style="width:${t-a}%;background:var(--amb)"></i><i style="width:${100-t}%;background:var(--grn);opacity:.7"></i><b style="left:calc(${conf*100}% - 4px)"></b></div><div class="gl"><span style="width:${a}%">${T('Person decides','افسر فیصلہ کرے')}</span><span style="width:${t-a}%">${T('Ask for proof','ثبوت مانگیں')}</span><span>${T('Acts alone','خود فیصلہ')}</span></div>`}
+const tag=s=>`<span class="tag ${{approved:'ok','approved by officer':'ok',rejected:'bad'}[s]||'warn'}">${S.ur&&SU2[s]||s}</span>`;
+
+const V={
+apply(){const f=S.form,ex={a:{name:'Fatima Bibi',cnic:'42201-7654321-2',age:47,income:12000},b:{name:'Mohamed Aslam',cnic:'42101-1234567-1',age:54,income:18000},c:{name:'Muhammed Aslam',cnic:'',age:'',income:''},d:{name:'Fatma Bibi',cnic:'42201-7654321-2',age:47,income:12000},e:{name:'Mohammad Aslam',cnic:'42101-1234999-1',age:61,income:30000}};
+ const L=S.last,who=S.role==='helper'?`<p class="mut">Applying for <b>${H(S.acting)}</b></p>`:'';
+ setTimeout(()=>{document.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{S.form=ex[b.dataset.ex];render()});
+ $('#go')&&($('#go').onclick=()=>{S.form={name:$('#n').value,cnic:$('#c').value,age:$('#a').value,income:$('#i').value};submit(S.form,S.role==='helper'?'Helper for '+S.acting:'Citizen')});
+ $('#say')&&($('#say').onclick=()=>say(UM[L.d.route]+'۔ '+L.d.why[1]))},0);
+ return `<h2>${T('Apply for the relief grant','امدادی گرانٹ کے لیے درخواست')}</h2>${who}<p><button class="snd" onclick="say('اپنا نام، شناختی نمبر، عمر اور ماہانہ آمدن لکھیں۔ پھر درخواست بھیجیں کا بٹن دبائیں۔')" aria-label="سنیں">🔊</button> <span class="mut">${T('Tap the speaker to hear what to do.','کیا کرنا ہے، سننے کے لیے اسپیکر دبائیں۔')}</span></p>
+ <div class="card"><div class="row"><div><label for="n">${T('Full name','پورا نام')}</label><input id="n" value="${H(f.name||'')}" autocomplete="off"></div><div><label for="c">${T('ID number','شناختی نمبر')}</label><input id="c" value="${H(f.cnic||'')}" placeholder="42201-0000000-0"></div><div><label for="a">${T('Age','عمر')}</label><input id="a" type="number" value="${f.age||''}"></div><div><label for="i">${T('Monthly income (Rs)','ماہانہ آمدن')}</label><input id="i" type="number" value="${f.income||''}"></div></div>
+ <p><button class="p big" id="go">${T('Send my application','درخواست بھیجیں')}</button></p>
+ <div class="try"><span class="mut">${T('Try an example:','مثال آزمائیں:')}</span><button class="g" data-ex="a">${T('Clean match','درست میل')}</button><button class="g" data-ex="b">${T('Spelling differs','ہجے مختلف')}</button><button class="g" data-ex="c">${T('Two Aslams, no ID','دو اسلم، آئی ڈی نہیں')}</button><button class="g" data-ex="d">${T('Typo in name','نام میں غلطی')}</button><button class="g" data-ex="e">${T('Over income','آمدن زیادہ')}</button></div></div>
+ ${L?`<div class="card slip s-${L.d.route}" aria-live="polite"><h3 style="margin-top:0">${L.id} · ${tag(L.st)}</h3><p class="${L.d.msg[1]}" style="font-size:22px;margin:6px 0">${S.ur?UM[L.d.route]:L.d.msg[0]}</p><p>${S.ur?L.d.why[1]:L.d.why[0]}</p><button class="big" id="say">🔊 ${T('Read it to me','مجھے پڑھ کر سنائیں')}</button>
+ ${gauge(L.d.conf,S.R)}<details><summary>Why? (full trace)</summary><ul>${L.d.tr.map(t=>`<li>${H(t)}</li>`).join('')}</ul></details></div>`:''}`},
+scam(){const s=S.scam;setTimeout(()=>{$('#chk')&&($('#chk').onclick=()=>{S.scam=scam($('#msg').value);log('AI engine','scam check',`${S.scam.label} ${S.scam.score.toFixed(2)}`);render()});$('#smp')&&($('#smp').onclick=()=>{$('#msg').value='URGENT: Your relief payment of Rs 25,000 is waiting. Click http://bit.ly/claim-now and send your CNIC and OTP today.'})},0);
+ return `<h2>${T('Check a message','پیغام جانچیں')}</h2><p class="mut">${T('Paste a message about a relief payment. We tell you if it looks fake, and say when we are unsure.','امدادی رقم کا پیغام یہاں ڈالیں۔ ہم بتائیں گے کہ دھوکہ لگتا ہے یا نہیں، اور جہاں یقین نہ ہو وہاں بھی بتائیں گے۔')}</p><div class="card"><textarea id="msg" rows="4"></textarea><p><button class="p big" id="chk">${T('Check message','پیغام جانچیں')}</button> <button class="g" id="smp">${T('Paste a sample','نمونہ ڈالیں')}</button></p></div>
+ ${s?`<div class="card"><h3 style="margin-top:0" class="${s.cls}">${S.ur?SU[s.label][0]:s.title}</h3><p>${S.ur?SU[s.label][1]:s.why}</p><button class="big" onclick="say(SU['${s.label}'][0]+'۔ '+SU['${s.label}'][1])">🔊 ${T('Read it to me','مجھے پڑھ کر سنائیں')}</button></div>`:''}<h3>How accurate is this checker?</h3>${scamEval()}`},
+data(){setTimeout(()=>{document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const k=b.dataset.c;if(k==='h')S.fam[0].h=!S.fam[0].h;else S.share[k]=!S.share[k];log('Citizen','consent change',k+' → '+(k==='h'?S.fam[0].h:S.share[k]?'shared':'stopped'));render()});$('#all').onclick=()=>{S.fam[0].h=S.share.dept=S.share.bank=false;log('Citizen','WITHDREW all consent','all access stopped');render()}},0);
+ const r=(l,k,v,d)=>`<tr><td><b>${l}</b><br><span class="mut">${d}</span></td><td>${v?`<span class="tag ok">${T('Sharing','شیئر ہو رہا ہے')}</span>`:`<span class="tag bad">${T('Stopped','بند')}</span>`}</td><td><button data-c="${k}">${v?T('Stop sharing','شیئر بند کریں'):T('Share again','دوبارہ شیئر کریں')}</button></td></tr>`;
+ return `<h2>${T('My data','میرا ڈیٹا')}</h2><p class="mut">${T('You decide who sees your record. Stopping takes effect at once, and is logged.','آپ طے کرتے ہیں کہ آپ کا ریکارڈ کون دیکھے۔ روکنے کا اثر فوراً ہوتا ہے اور لاگ میں درج ہوتا ہے۔')}</p><div class="card scroll"><table>${r('Nasreen (community helper)','h',S.fam[0].h,'Can open and send applications for you')}${r('Relief department','dept',S.share.dept,'Sees your application')}${r('Mock bank (payment)','bank',S.share.bank,'Gets your account to pay you')}</table><p><button class="big" id="all">${T('Stop all sharing','سب کچھ بند کریں')}</button></p></div>`},
+cases(){return `<h2>${T('Cases','کیس')}</h2>${S.queue.length?`<div class="card warn">${S.queue.length} saved offline. Go online to send.</div>`:''}<div class="card scroll"><table><tr><th>Case</th><th>Name</th><th>Status</th><th>Rule</th></tr>${S.cases.filter(c=>S.role==='citizen'?c.by==='Citizen':S.role==='helper'?c.by.startsWith('Helper'):true).map(c=>`<tr><td>${c.id}</td><td>${H(c.x.name)}</td><td>${tag(c.st)}</td><td>v${c.v}</td></tr>`).join('')||'<tr><td colspan=4>No cases yet. Start with Apply.</td></tr>'}</table></div>`},
+families(){setTimeout(()=>document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{const f=S.fam[b.dataset.f];if(!f.h){log('Helper','DENIED open '+f.n,'no consent from this family');toast(f.n+' has not allowed you to act for them.');render();return}S.acting=f.n;S.form={name:f.n};log('Helper','opened '+f.n,'consent checked');S.last=null;S.tab='apply';render()}),0);
+ return `<h2>My families</h2><p class="mut">One shared phone. Each family has its own permission, checked on the server every time.</p><div class="card scroll"><table>${S.fam.map((f,i)=>`<tr><td><b>${f.n}</b></td><td>${f.h?'<span class="tag ok">Allowed</span>':'<span class="tag bad">Not allowed</span>'}</td><td><button data-f="${i}">Open</button></td></tr>`).join('')}</table></div>`},
+queue(){if(!guard('review'))return'';const q=S.cases.filter(c=>c.st==='in review'||c.st==='needs proof').sort((a,b)=>a.d.conf-b.d.conf);
+ setTimeout(()=>document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(!guard('review'))return;const c=S.cases.find(c=>c.id===b.dataset.i),n=$('#nt'+c.id).value;if(!n){toast('Write a short note first.');return}c.st=b.dataset.d==='y'?'approved by officer':'rejected';log('Officer','decision '+c.id,c.st+' · '+n);render()}),0);
+ return `<h2>Review queue</h2><p class="mut">Lowest confidence first. Each case arrives with notes attached.</p>${q.map(c=>`<div class="card"><b>${c.id} · ${H(c.x.name)}</b> ${tag(c.st)}<div class="mut">Confidence ${c.d.conf.toFixed(2)} · rule v${c.v}${c.d.rec?' · closest record: '+H(c.d.rec):''}</div><ul>${c.d.tr.map(t=>`<li>${H(t)}</li>`).join('')}</ul><input id="nt${c.id}" placeholder="Your note"><p><button class="p" data-d="y" data-i="${c.id}">Approve</button> <button data-d="n" data-i="${c.id}">Reject</button></p></div>`).join('')||'<div class="card">Nothing waiting.</div>'}`},
+rules(){if(!guard('rules'))return'';const R=S.R;setTimeout(()=>$('#sv')&&($('#sv').onclick=()=>{if(!guard('rules'))return;S.hist.unshift({...S.R});S.R={...S.R,...rf(),v:S.R.v+1};log('Admin','rule v'+S.R.v,JSON.stringify(rf()));toast('Rule v'+S.R.v+' is live. No redeploy.');render()}),0);
+ const f=(k,l)=>`<div><label for="r_${k}">${l}</label><input id="r_${k}" type="number" step="any" value="${R[k]}"></div>`;
+ return `<h2>Rules · live version v${R.v}</h2><p class="mut">Changes apply to the next decision. Old decisions keep the version they used.</p><div class="card"><div class="row">${f('maxIncome','Highest monthly income (Rs)')}${f('minAge','Lowest age')}${f('costWrong','Cost of a wrong approval')}${f('costSlow','Cost of a delay')}${f('askBelow','Below this, a person decides')}</div><p>Acts alone at confidence <b>${thr(R).toFixed(3)}</b> = ${R.costWrong} ÷ (${R.costWrong} + ${R.costSlow}). A wrong approval costing ${R.costWrong}× a delay means we only act alone when we expect fewer than 1 error in ${R.costWrong+R.costSlow}.</p><button class="p" id="sv">Publish new version</button></div>${gauge(.8,R)}`},
+twin(){if(!guard('rules'))return'';setTimeout(()=>$('#tw').onclick=()=>{const N={...S.R,...rf()};let ch=0,l=[];S.cases.forEach(c=>{const d=decide(c.x,N);if(d.route!==c.d.route){ch++;l.push(`${c.id} ${H(c.x.name)}: ${c.d.route} → ${d.route}`)}});S.twin={n:S.cases.length,ch,l};render()},0);
+ const R=S.R,f=(k,l)=>`<div><label for="r_${k}">${l}</label><input id="r_${k}" type="number" step="any" value="${R[k]}"></div>`,t=S.twin;
+ return `<h2>Test a rule change</h2><p class="mut">Digital twin: replay past cases with a draft rule. Nothing goes live.</p><div class="card"><div class="row">${f('maxIncome','Highest income (Rs)')}${f('minAge','Lowest age')}${f('costWrong','Cost of wrong approval')}${f('costSlow','Cost of delay')}${f('askBelow','Person decides below')}</div><p><button class="p" id="tw">Replay on ${S.cases.length} past cases</button></p></div>${t?`<div class="card"><b>${t.ch} of ${t.n} decisions would change.</b><ul>${t.l.map(x=>`<li>${x}</li>`).join('')}</ul></div>`:''}`},
+svc(){return `<h2>Mock services & API</h2><p class="mut">Everything here is simulated. Calls need an API key and a bearer token; the server refuses any role without permission.</p><div class="card scroll"><table><tr><th>Endpoint</th><th>Role</th><th>Does</th></tr>
+ <tr><td>POST /v1/cases</td><td>citizen, helper</td><td>Create a case and get a decision with trace</td></tr><tr><td>GET /v1/review-queue</td><td>officer</td><td>Cases sorted by confidence</td></tr><tr><td>PUT /v1/rules</td><td>admin</td><td>Publish a new rule version</td></tr><tr><td>GET /v1/audit</td><td>auditor</td><td>Read-only log</td></tr><tr><td>DELETE /v1/consents/{id}</td><td>citizen</td><td>Withdraw sharing</td></tr><tr><td>GET /mock/identity/{id}</td><td>service</td><td>Mock NADRA-style lookup (${REG.length} fake people)</td></tr><tr><td>POST /mock/payments</td><td>service</td><td>Mock Raast-style payout</td></tr></table></div>
+ <div class="card"><b>Real:</b> decision engine, fuzzy matching, rule versions, consent checks, role checks in this page. <b>Simulated:</b> identity, payment, SMS, login tokens, database, network.</div>`},
+audit(){if(!guard('audit'))return'';return `<h2>Audit log</h2><p class="mut">Read-only. Every user, AI and agent action.</p><div class="card scroll"><table><tr><th>Time</th><th>Who</th><th>Action</th><th>Detail</th></tr>${S.audit.map(a=>`<tr><td>${a.t}</td><td>${H(a.a)}</td><td>${H(a.x)}</td><td>${H(a.d)}</td></tr>`).join('')}</table></div>`}};
+const rf=()=>{const o={};['maxIncome','minAge','costWrong','costSlow','askBelow'].forEach(k=>{const e=$('#r_'+k);if(e&&e.value!=='')o[k]=+e.value});return o};
+
+const BAD=['relief','urgent','click','otp','cnic','pin','prize','bit.ly','.xyz','http','claim now','verify','blocked'];
+function scam(t){const l=t.toLowerCase();let h=BAD.filter(w=>l.includes(w)).length,o=/8171|official portal/.test(l);let sc=Math.min(1,h/5)-(o?.4:0);sc=Math.max(0,sc);
+ if(sc>=.7)return{label:'scam',score:sc,cls:'bad',title:'This looks like a scam. Do not click or reply.',why:'It asks for money, ID or a code and pushes you to hurry. No relief office asks for your OTP.'};
+ if(sc>=.35)return{label:'unsure',score:sc,cls:'warn',title:'We are not sure. A person will look at it.',why:'Some signs of a scam, not enough to be certain. Do not share any code until you are told.'};
+ return{label:'ok',score:sc,cls:'ok',title:'Looks normal, but never share your OTP.',why:'No strong scam signs found.'}}
+function scamEval(){const D=[['URGENT claim now: click http://bit.ly/x send OTP and CNIC','scam'],['Relief payment blocked! verify pin at http://pay.xyz','scam'],['Your relief prize is waiting, click link','scam'],['Dear citizen, your claim was received. Track it on the official portal 8171','ok'],['Your 8171 payment of Rs 5000 was approved. official portal','ok'],['Meeting at 5 pm tomorrow','ok'],['Please bring your CNIC to the office on Monday','ok'],['Verify your account: click the link','scam']];
+ let tp=0,fp=0,fn=0,un=0;D.forEach(([t,y])=>{const r=scam(t).label;if(r==='unsure')un++;else if(r==='scam'&&y==='scam')tp++;else if(r==='scam')fp++;else if(y==='scam')fn++});
+ return `<div class="card">On ${D.length} test messages: caught ${tp}, wrongly blocked ${fp}, missed ${fn}, sent to a person ${un}. Blocking a real person costs too, so unsure cases go to a human.</div>`}
+
+function render(){const r=S.role;$('#nav').innerHTML=ROLES[r].map(t=>`<button class="${t===S.tab?'on':''}" data-t="${t}">${S.ur?NU[t]:NAMES[t]}</button>`).join('');
+ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
+ if(!ROLES[r].includes(S.tab))S.tab=ROLES[r][0];$('#main').innerHTML=V[S.tab]();$('#lang').textContent=S.ur?'English':'اردو';document.documentElement.dir=S.ur?'rtl':'ltr';document.documentElement.lang=S.ur?'ur':'en';
+ $('#net').textContent=S.off?'Offline':'Online';$('#netbar').style.display=S.off?'block':'none';save()}
+$('#role').innerHTML=Object.keys(ROLES).map(r=>`<option value="${r}">${r[0].toUpperCase()+r.slice(1)}</option>`).join('');
+$('#role').onchange=e=>{S.role=e.target.value;S.tab=ROLES[S.role][0];S.last=null;log(S.role,'signed in','mock JWT issued');render()};
+$('#lang').onclick=()=>{S.ur=!S.ur;render()};
+$('#rst').onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){}location.reload()};
+$('#net').onclick=()=>{S.off=!S.off;if(!S.off&&S.queue.length){const n=S.queue.length;S.queue.splice(0).forEach(q=>submit(q.x,q.by));toast(n+' saved item(s) sent. Duplicates skipped.')}render()};
+load();if(!S.loaded)S.cases.push({id:'C-097',k:'s1',x:{name:'Zainab Khatun',cnic:'42301-5550001-2',age:66,income:9000},by:'Citizen',v:1,st:'approved',d:decide({name:'Zainab Khatun',cnic:'42301-5550001-2',age:66,income:9000},S.R)});
+if(!S.loaded)S.cases.push({id:'C-098',k:'s2',x:{name:'Muhammed Aslam',cnic:'',age:'',income:''},by:'Citizen',v:1,st:'in review',d:decide({name:'Muhammed Aslam'},S.R)});
+try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}catch(e){}
+log('System','seeded','2 mock cases');render();
+</script></body></html>

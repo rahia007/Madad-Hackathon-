@@ -1,0 +1,1078 @@
+# PROJECT: MADAD DESK — FULL-STACK AI-POWERED PUBLIC SERVICE PLATFORM
+
+## 1. YOUR ROLE
+
+Act as a senior full-stack software architect, AI/ML engineer, database engineer, cybersecurity specialist, and award-winning UI/UX designer.
+
+Your task is to transform my existing Madad Desk prototype into a complete, production-quality, functional full-stack web application.
+
+This is a hackathon project, but it must demonstrate the architecture and functionality of a real-world application.
+
+**THIS IS NOT A UI-ONLY PROJECT.**
+
+I do not want:
+- Static dashboards.
+- Fake buttons.
+- Dummy forms.
+- Hardcoded AI responses.
+- Simulated database operations presented as real.
+- Decorative microphone buttons.
+- Fake loading animations.
+- Frontend-only authentication.
+- Data that disappears on refresh.
+- Placeholder charts pretending to show analytics.
+
+Every visible feature must work.
+
+Every important operation must connect to a real backend, database, or AI service.
+
+If an external government service is unavailable, implement a clearly labelled, working mock adapter rather than falsely claiming a real integration.
+
+---
+
+# 2. PROJECT OVERVIEW
+
+Product name: MADAD DESK (مدد ڈیسک)
+
+Tagline: Technology that understands people.
+
+Madad Desk is an AI-powered, human-centred public-service platform designed to make public assistance and relief services more accessible, transparent, secure, and understandable.
+
+It connects:
+- Citizens seeking public assistance.
+- Community helpers assisting multiple families.
+- Government or department officers reviewing applications.
+- Administrators managing eligibility rules and system configuration.
+- Independent auditors monitoring decisions and system activity.
+
+The platform uses responsible AI to assist with:
+- Application processing.
+- Identity and record matching.
+- Eligibility assessment.
+- Uncertainty detection.
+- Scam and fraudulent-message detection.
+- Voice-based accessibility.
+- Human escalation.
+- Explainable AI decisions.
+
+The system must be accessible to people with limited technical literacy, including Urdu-speaking users.
+
+---
+
+# 3. REQUIRED TECHNOLOGY STACK
+
+Use a modern, maintainable architecture.
+
+### Frontend
+- Next.js with App Router.
+- TypeScript.
+- React.
+- Tailwind CSS.
+- shadcn/ui as a foundation, with heavily customised styling.
+- Framer Motion for meaningful animations.
+- Lucide icons.
+- Recharts for analytics and visualisations.
+- React Hook Form and Zod for form validation.
+
+### Backend
+- Next.js server-side API routes or server actions.
+- Supabase for backend infrastructure.
+- PostgreSQL as the primary relational database.
+- Supabase Auth for real authentication.
+- Supabase Storage for secure document uploads.
+- Supabase Realtime for live updates where appropriate.
+- Server-side role and permission enforcement.
+
+### AI integration
+Use an actual LLM API through a server-side integration.
+
+Prefer an OpenAI API integration, with the model configurable through environment variables.
+
+Implement separate AI services for:
+1. Application explanation and assistance.
+2. Scam-message classification.
+3. Document information extraction, where appropriate.
+4. Natural-language voice assistance.
+
+Do not expose API keys in frontend code.
+
+### Voice
+Implement actual speech-to-text and text-to-speech.
+
+Use:
+- Browser Web Speech API where supported.
+- A configurable server-side transcription provider as a fallback.
+- A real text-to-speech provider or browser speech synthesis fallback.
+- Urdu and English language support.
+
+Clearly indicate when browser or device voice support is unavailable.
+
+### Development
+- Git-friendly modular project structure.
+- Environment variables.
+- Database migrations.
+- Seed scripts.
+- Automated tests.
+- Clear setup documentation.
+
+Do not introduce unnecessary technologies just to make the architecture complicated.
+
+---
+
+# 4. VISUAL DESIGN — PREMIUM, DISTINCTIVE AND CREATIVE
+
+I want an aesthetic, sophisticated, memorable interface.
+
+Do not create a generic admin dashboard.
+
+Design direction:
+
+**Editorial design + premium fintech + human-centred civic technology.**
+
+Colour palette:
+- Deep forest green: #17372E
+- Warm ivory: #F4EFE5
+- Muted copper: #B77B50
+- Sage: #DCE6DA
+- Terracotta: #A94F40
+- Dark charcoal: #202923
+
+Typography:
+- Manrope for interface typography.
+- Playfair Display for selected editorial headings.
+- Noto Naskh Arabic for Urdu.
+
+Design requirements:
+- Beautiful typography hierarchy.
+- Asymmetric editorial layouts.
+- Generous spacing.
+- Custom-designed cards and components.
+- Subtle gradients and textures.
+- Sophisticated charts.
+- Custom empty states.
+- Smooth transitions.
+- Meaningful micro-interactions.
+- Beautiful loading and success states.
+- Responsive desktop, tablet and mobile layouts.
+- Excellent accessibility and keyboard navigation.
+- Proper RTL layout for Urdu.
+
+Avoid:
+- Excessive rounded cards.
+- Generic purple AI gradients.
+- Unnecessary glassmorphism.
+- Excessive animations.
+- Emoji-based navigation.
+- Cluttered dashboards.
+- Oversized decorative elements.
+- Identical layouts for all user roles.
+
+The citizen experience should feel welcoming and extremely simple.
+
+The officer and administrator experiences should feel powerful, data-rich and professional.
+
+---
+
+# 5. ROLE-BASED APPLICATION ARCHITECTURE
+
+Implement five genuinely separate role-based experiences.
+
+## A. CITIZEN PORTAL
+
+Create a welcoming citizen dashboard.
+
+Features:
+
+1. Citizen registration and login.
+2. Citizen profile.
+3. Apply for relief assistance.
+4. Upload supporting documents.
+5. View application progress.
+6. View previous applications.
+7. Receive notifications.
+8. Check suspicious messages.
+9. Manage personal data and consent.
+10. Voice-assisted navigation.
+11. Switch between Urdu and English.
+
+Application form fields:
+- Full name.
+- CNIC.
+- Age.
+- Monthly household income.
+- Household details where required.
+- Contact information.
+- Supporting documents.
+
+Form requirements:
+- Real frontend and backend validation.
+- Save draft functionality.
+- Upload files securely.
+- Submit to the backend.
+- Generate a unique application ID.
+- Prevent duplicate submissions.
+- Display real-time application status.
+- Store submission timestamps.
+
+After submission, show an attractive application tracking experience with a clear timeline.
+
+## B. COMMUNITY HELPER PORTAL
+
+Community helpers can assist multiple families.
+
+Features:
+- Helper authentication.
+- Assigned family list.
+- Search families.
+- Individual family profiles.
+- View application history with permission.
+- Submit applications on behalf of a family.
+- Upload documents with permission.
+- View case progress.
+- Manage assistance activity.
+
+Critical privacy requirement:
+
+A helper must NOT be able to access a family's information unless the family has granted the necessary permission.
+
+Consent must be checked on the backend for every protected action.
+
+## C. DEPARTMENT OFFICER PORTAL
+
+Create a professional application review workspace.
+
+Features:
+- Live review queue.
+- Search and filter applications.
+- Sort by confidence and urgency.
+- Application detail view.
+- AI-generated reasoning.
+- Identity mismatch information.
+- Missing document information.
+- Eligibility assessment.
+- Complete decision history.
+- Officer notes.
+- Request additional evidence.
+- Approve application.
+- Reject application with mandatory justification.
+- Escalate to another officer.
+
+Never allow an AI model to silently make a final rejection.
+
+Uncertain or potentially harmful decisions must be escalated to a human.
+
+Every officer action must be recorded in the audit log.
+
+## D. ADMINISTRATOR PORTAL
+
+Features:
+- System analytics.
+- User and role management.
+- Eligibility rule management.
+- Version-controlled rule configuration.
+- AI performance monitoring.
+- Decision statistics.
+- Fraud detection statistics.
+- Mock external-service configuration.
+- Notification configuration.
+- System health.
+- Audit monitoring.
+
+### Rule management
+
+Administrators should be able to configure:
+- Maximum income.
+- Minimum age.
+- Confidence thresholds.
+- Cost of false approval.
+- Cost of delayed assistance.
+- Human review thresholds.
+
+Implement a real rule-versioning system.
+
+When rules change:
+- Create a new version.
+- Preserve previous versions.
+- Never modify historical decisions.
+- Show a before/after comparison.
+- Record the administrator responsible.
+- Allow simulation before publishing.
+
+## E. AUDITOR PORTAL
+
+Create a secure, read-only auditor experience.
+
+Features:
+- Full audit timeline.
+- Application decision history.
+- AI decision traces.
+- Consent history.
+- Officer actions.
+- Rule changes.
+- User activity.
+- Security events.
+- Exportable audit reports.
+
+Auditors must not be able to alter applications, rules, or decisions.
+
+---
+
+# 6. DATABASE — REAL PERSISTENT POSTGRESQL
+
+Design a properly normalised relational database.
+
+Do not use localStorage as the primary database.
+
+Create migrations, relationships, constraints and indexes.
+
+Required tables:
+
+### Authentication and access
+- profiles
+- roles
+- user_roles
+- helper_assignments
+- permissions
+
+### Citizen information
+- citizens
+- households
+- family_members
+- consents
+
+### Applications
+- applications
+- application_documents
+- application_status_history
+- application_notes
+- application_decisions
+
+### AI
+- ai_runs
+- ai_decision_explanations
+- scam_checks
+- document_extractions
+- ai_feedback
+
+### Administration
+- eligibility_rules
+- eligibility_rule_versions
+- rule_simulations
+
+### Audit and notifications
+- audit_logs
+- notifications
+- notification_preferences
+
+### Infrastructure
+- service_integrations
+- offline_submissions
+- sync_events
+
+Database requirements:
+
+1. Proper primary and foreign keys.
+2. Unique constraints for application IDs and appropriate identity fields.
+3. Timestamps for important records.
+4. Soft deletion where legally and operationally appropriate.
+5. Indexed lookup fields.
+6. Database transactions for critical operations.
+7. Referential integrity.
+8. Row Level Security (RLS).
+9. Secure storage policies.
+10. Data minimisation.
+
+Never expose sensitive CNIC information in public API responses or application logs.
+
+Encrypt sensitive personal information appropriately.
+
+Store document files in private storage buckets and use signed URLs with short expiry times.
+
+Implement actual RLS policies. Hiding a button in the frontend is NOT access control.
+
+---
+
+# 7. REAL AI INTEGRATION
+
+Implement a modular AI service layer.
+
+All AI calls must occur through secure server-side endpoints.
+
+## A. AI APPLICATION ASSISTANT
+
+Create an AI assistant that helps citizens understand the application process.
+
+It should:
+- Explain application requirements.
+- Help users understand form fields.
+- Explain application status.
+- Explain missing documents.
+- Answer questions in Urdu and English.
+- Guide users through the application process.
+- Avoid inventing government policies.
+- Clearly distinguish verified system information from general guidance.
+
+The assistant should retrieve application information only after verifying the authenticated user's permissions.
+
+It must not expose other citizens' records.
+
+## B. AI-ASSISTED ELIGIBILITY ENGINE
+
+Separate deterministic eligibility logic from LLM reasoning.
+
+The actual eligibility decision must use a transparent, configurable rules engine.
+
+Use AI for:
+- Extracting relevant information from uploaded documents.
+- Identifying inconsistencies.
+- Explaining mismatches.
+- Summarising application information.
+- Helping officers understand complex cases.
+
+The deterministic engine must calculate eligibility and routing using versioned rules.
+
+Confidence and eligibility are different concepts.
+
+Do not treat a high confidence score as proof of eligibility.
+
+Possible routing outcomes:
+
+1. AUTO-APPROVAL: only when all strict policy and confidence requirements are met.
+2. REQUEST-EVIDENCE: when additional documentation is necessary.
+3. HUMAN-REVIEW: when identity, eligibility or evidence is uncertain.
+
+Never automatically reject a citizen based solely on an AI prediction.
+
+Record:
+- Input data references.
+- Rule version.
+- Confidence score.
+- Decision outcome.
+- Reasoning.
+- AI model identifier.
+- Timestamp.
+- Human overrides.
+
+AI explanations must not fabricate facts or expose hidden chain-of-thought. Provide concise, evidence-based decision explanations instead.
+
+## C. AI SCAM DETECTION
+
+Build an actual AI-powered suspicious-message checker.
+
+Citizens should be able to:
+- Paste a message.
+- Upload a screenshot where supported.
+- Submit a message using voice.
+- Receive a risk assessment.
+
+Analyse:
+- Urgency and pressure tactics.
+- Requests for OTPs or passwords.
+- Requests for CNIC or sensitive information.
+- Suspicious payment requests.
+- Suspicious URLs.
+- Impersonation.
+- Unusual reward or relief claims.
+- Contextual language patterns.
+
+Return structured results:
+
+{
+  "risk_level": "high | medium | low | uncertain",
+  "confidence": 0.0,
+  "indicators": [],
+  "explanation": "",
+  "recommended_actions": [],
+  "human_review_required": false
+}
+
+Use validated structured AI output.
+
+Combine AI analysis with deterministic URL and pattern checks.
+
+Do not claim that a message is safe merely because the model finds no suspicious indicators.
+
+Do not automatically visit suspicious URLs.
+
+Provide understandable explanations in Urdu and English.
+
+Store scam-check history only with appropriate privacy controls.
+
+## D. AI EXPLAINABILITY
+
+Build a dedicated AI Decision Room.
+
+Display:
+- Application information used.
+- Identity matching results.
+- Rule version.
+- Eligibility conditions.
+- Missing information.
+- Confidence assessment.
+- Reasons for escalation.
+- Final human decision, if applicable.
+
+Make it visually understandable.
+
+Use visual confidence indicators, decision timelines and evidence summaries.
+
+Do not display arbitrary confidence percentages. Explain how scores are calculated and their limitations.
+
+---
+
+# 8. VOICE-FIRST ACCESSIBILITY
+
+Voice is a core feature, not an optional decoration.
+
+Create a persistent, accessible voice assistant.
+
+### Voice interaction
+
+The citizen should be able to press a microphone button and say things such as:
+
+- "I want to apply for assistance."
+- "What documents do I need?"
+- "Check my application."
+- "Explain this message."
+- "Switch to Urdu."
+- "Read my application status."
+
+The system must:
+
+1. Request microphone permission.
+2. Capture audio.
+3. Convert speech to text.
+4. Identify the language.
+5. Process the request.
+6. Retrieve only authorised information.
+7. Generate an appropriate response.
+8. Convert the response to speech.
+9. Display the transcript.
+10. Allow the user to stop playback.
+
+### Voice interface design
+
+Create an elegant floating voice assistant.
+
+States:
+- Idle.
+- Listening.
+- Processing.
+- Responding.
+- Error.
+
+Use subtle waveform animations that react to actual audio input where possible.
+
+Include:
+- Microphone controls.
+- Mute.
+- Stop speaking.
+- Repeat response.
+- Transcript.
+- Language selection.
+- Text input alternative.
+
+Support Urdu (Pakistan) and English.
+
+Do not assume all devices have Urdu speech synthesis installed.
+
+If speech recognition is unsupported, provide an alternative transcription route or clearly explain the limitation.
+
+Do not continuously record audio in the background.
+
+Obtain consent before processing audio and do not permanently retain recordings by default.
+
+---
+
+# 9. OFFLINE-FIRST FUNCTIONALITY
+
+The application must remain usable under poor internet connectivity.
+
+Implement:
+- Progressive Web App support.
+- Service worker.
+- Offline application drafts.
+- IndexedDB for local pending submissions.
+- Offline status indicator.
+- Sync queue.
+- Automatic retry when connectivity returns.
+- Duplicate prevention using idempotency keys.
+- Conflict handling.
+- Sync history.
+
+Important:
+
+Local offline storage is temporary and device-specific. Do not represent it as server-synchronised until the server confirms receipt.
+
+Protect sensitive information stored on devices.
+
+Do not cache private application data in public service-worker caches.
+
+---
+
+# 10. CONSENT AND PRIVACY
+
+Create a proper data-sharing and consent centre.
+
+Citizens should control permissions for:
+- Community helper access.
+- Department access.
+- Payment-service access.
+- Supporting document access.
+
+Implement:
+- Explicit consent.
+- Consent timestamps.
+- Consent scope.
+- Consent withdrawal.
+- Permission verification on the server.
+- Consent history.
+- Audit logging.
+
+Withdrawing consent must immediately prevent future unauthorised access.
+
+Do not assume withdrawal can erase records that must legally be retained. Clearly explain retention limitations.
+
+---
+
+# 11. EXTERNAL SERVICE INTEGRATIONS
+
+Design an adapter-based architecture for external services.
+
+Potential integrations:
+- Identity verification adapter.
+- Payment adapter.
+- SMS notification adapter.
+- Email notification adapter.
+
+Create a mock identity service using synthetic records for the hackathon demonstration.
+
+Create a mock payment service that records simulated payment requests and responses.
+
+Create a mock notification service.
+
+Each service must have:
+- Defined request and response schemas.
+- Error handling.
+- Timeouts.
+- Retry policies where appropriate.
+- Integration status.
+- Logs with sensitive information redacted.
+
+Never claim that the application is connected to NADRA, Raast or a government database unless an actual authorised integration has been configured and tested.
+
+Clearly label mock services in the interface.
+
+---
+
+# 12. NOTIFICATIONS
+
+Implement real in-app notifications.
+
+Notify users when:
+- An application is submitted.
+- Documents are requested.
+- An application enters human review.
+- A decision is made.
+- A helper accesses an authorised record.
+- A consent setting changes.
+
+Include:
+- Notification centre.
+- Read/unread status.
+- Timestamps.
+- Notification preferences.
+- Backend persistence.
+
+Email or SMS should use configured providers. If credentials are missing, show the delivery as unavailable rather than pretending it was sent.
+
+---
+
+# 13. API ARCHITECTURE
+
+Create documented, authenticated backend endpoints.
+
+Examples:
+
+POST /api/applications
+GET /api/applications
+GET /api/applications/:id
+PATCH /api/applications/:id
+POST /api/applications/:id/documents
+POST /api/applications/:id/submit
+
+GET /api/review-queue
+POST /api/applications/:id/review
+POST /api/applications/:id/request-evidence
+
+POST /api/ai/assistant
+POST /api/ai/scam-check
+POST /api/ai/document-extraction
+GET /api/ai/decision/:id
+
+GET /api/consents
+POST /api/consents
+DELETE /api/consents/:id
+
+GET /api/admin/analytics
+GET /api/admin/rules
+POST /api/admin/rules
+POST /api/admin/rules/simulate
+
+GET /api/audit
+GET /api/notifications
+
+Every endpoint must:
+- Validate inputs.
+- Authenticate users.
+- Enforce role permissions.
+- Enforce record ownership.
+- Handle errors.
+- Return structured responses.
+- Log security-relevant events.
+
+Use pagination, filtering and rate limiting where appropriate.
+
+Generate API documentation.
+
+---
+
+# 14. SECURITY REQUIREMENTS
+
+Implement:
+
+- Real authentication.
+- Secure session handling.
+- Server-side RBAC.
+- Row Level Security.
+- Input validation.
+- Output sanitisation.
+- Rate limiting.
+- CSRF protection where applicable.
+- Secure file uploads.
+- File type and size restrictions.
+- Protection against IDOR.
+- Protection against SQL injection.
+- Protection against XSS.
+- Secrets stored only in environment variables.
+- Sensitive data redaction.
+- Audit logging.
+- Secure error responses.
+
+Never trust a role supplied by the frontend.
+
+Never allow a citizen to approve their own application as an officer.
+
+Never allow helpers to bypass consent.
+
+Never allow auditors to mutate records.
+
+Protect AI endpoints against prompt injection and malicious document content.
+
+---
+
+# 15. ANALYTICS AND DASHBOARDS
+
+Build dashboards using actual database queries.
+
+Citizen:
+- Total applications.
+- Application status.
+- Recent updates.
+
+Officer:
+- Pending cases.
+- Cases awaiting evidence.
+- Cases under review.
+- Average review time.
+- Decision distribution.
+
+Administrator:
+- Total applications.
+- Approval and review distribution.
+- Scam-check activity.
+- AI routing distribution.
+- Human escalation rate.
+- Rule-version comparisons.
+- Service availability.
+
+Auditor:
+- Decision activity.
+- Consent changes.
+- Rule changes.
+- Security events.
+
+Charts must be derived from real records.
+
+Clearly label seeded demonstration data.
+
+Never invent analytics or display fabricated live statistics.
+
+---
+
+# 16. DEMO MODE FOR HACKATHON
+
+Create a complete demo environment.
+
+Use synthetic Pakistani citizen records only.
+
+Seed enough data to demonstrate:
+- Successful application matching.
+- Name spelling mismatch.
+- Missing CNIC.
+- Duplicate identity ambiguity.
+- Income outside the eligibility threshold.
+- Missing documentation.
+- Human escalation.
+- Scam message detection.
+- Consent withdrawal.
+- Rule simulation.
+- Offline submission and synchronisation.
+
+Create separate demo accounts for all five roles.
+
+Provide a secure, documented way to initialise the demo environment.
+
+Do not implement a production role-switcher that allows anyone to become an administrator.
+
+Demo credentials must be explicitly marked as demonstration-only.
+
+---
+
+# 17. USER EXPERIENCE DETAILS
+
+Every interaction must have a proper state.
+
+Examples:
+
+Application submission:
+- Validate.
+- Show loading state.
+- Submit to backend.
+- Handle failure.
+- Confirm successful creation.
+- Display application ID.
+
+Document upload:
+- Validate file.
+- Show upload progress.
+- Upload securely.
+- Confirm persistence.
+- Display uploaded file.
+
+AI processing:
+- Show actual processing state.
+- Handle API timeouts.
+- Handle malformed responses.
+- Provide understandable fallback messages.
+
+Offline:
+- Show offline status.
+- Save eligible drafts locally.
+- Queue submissions.
+- Sync when online.
+- Show confirmed sync results.
+
+Buttons must never be decorative.
+
+No dead links.
+
+No fake forms.
+
+No interactions that only change frontend state while claiming to update the database.
+
+---
+
+# 18. TESTING AND QUALITY ASSURANCE
+
+Write automated tests.
+
+### Unit tests
+- Eligibility calculations.
+- Confidence routing.
+- Duplicate detection.
+- Input validation.
+- Scam classification parsing.
+- Consent verification.
+
+### Integration tests
+- Authentication.
+- Application submission.
+- Database persistence.
+- Document upload.
+- AI API endpoints.
+- Rule versioning.
+- Notifications.
+
+### Security tests
+- Citizen accessing another citizen's application.
+- Helper accessing a family without consent.
+- Citizen attempting officer actions.
+- Auditor attempting to mutate records.
+- Unauthenticated API requests.
+- Malicious document uploads.
+
+### End-to-end tests
+
+Test the complete workflows:
+
+1. Citizen registers.
+2. Citizen submits an application.
+3. Backend saves the application.
+4. AI and rules engine process it.
+5. Officer receives a review item if needed.
+6. Officer records a decision.
+7. Citizen sees the updated status.
+8. Audit log records every action.
+
+Also test Urdu/English switching, voice fallbacks, mobile responsiveness and offline synchronisation.
+
+---
+
+# 19. DEVELOPMENT PROCESS
+
+Do not attempt to create a beautiful frontend while leaving the backend incomplete.
+
+Build the application in phases.
+
+### Phase 1 — Inspect the existing project
+- Inspect every existing file.
+- Understand the current JavaScript logic.
+- Identify reusable functionality.
+- Identify mock functionality.
+- Preserve the original product concept.
+- Prepare a migration plan.
+
+### Phase 2 — Architecture and database
+- Set up Next.js.
+- Configure Supabase.
+- Design the database.
+- Create migrations.
+- Implement authentication.
+- Configure RLS.
+- Add seed data.
+
+### Phase 3 — Core backend
+- Build application APIs.
+- Implement eligibility engine.
+- Implement permissions.
+- Implement consent.
+- Implement audit logging.
+- Implement notifications.
+
+### Phase 4 — AI integration
+- Connect the actual AI API.
+- Implement scam detection.
+- Implement application assistance.
+- Implement explainability.
+- Implement document extraction.
+
+### Phase 5 — Voice and offline
+- Implement speech-to-text.
+- Implement text-to-speech.
+- Implement Urdu and English.
+- Build the offline queue.
+- Implement synchronisation.
+
+### Phase 6 — Premium frontend
+- Design all five role experiences.
+- Build responsive components.
+- Connect every screen to actual APIs.
+- Add animations and visualisations.
+- Implement loading, empty, success and error states.
+
+### Phase 7 — Testing and deployment
+- Run all tests.
+- Fix errors.
+- Test all roles.
+- Test database persistence.
+- Test security permissions.
+- Verify AI integration.
+- Verify voice functionality.
+- Prepare deployment documentation.
+
+---
+
+# 20. FINAL ACCEPTANCE CRITERIA
+
+The project is NOT complete until all of the following are true:
+
+[ ] All five roles have working authentication and permissions.
+
+[ ] Citizens can submit and track real applications.
+
+[ ] Application information persists in PostgreSQL.
+
+[ ] Helpers can only access authorised families.
+
+[ ] Officers can review and decide applications.
+
+[ ] Administrators can publish versioned eligibility rules.
+
+[ ] Rule simulations work against historical applications.
+
+[ ] Auditors can inspect a real audit trail.
+
+[ ] AI integration uses an actual configured model API.
+
+[ ] Scam detection works through an actual AI service and supporting checks.
+
+[ ] AI explanations are grounded in application evidence.
+
+[ ] Voice input and speech output work, with fallbacks.
+
+[ ] Urdu and English are supported throughout the main workflows.
+
+[ ] Document uploads work through secure storage.
+
+[ ] Consent withdrawal is enforced by the backend.
+
+[ ] Offline drafts and queued submissions synchronise correctly.
+
+[ ] Notifications persist and update correctly.
+
+[ ] Analytics are calculated from database records.
+
+[ ] All buttons and forms perform their advertised actions.
+
+[ ] Security and role-isolation tests pass.
+
+[ ] The application works on mobile and desktop.
+
+[ ] There are no broken routes or critical console errors.
+
+[ ] Setup and deployment instructions are complete.
+
+---
+
+# 21. MOST IMPORTANT INSTRUCTIONS
+
+1. Work with my existing Madad Desk project instead of discarding its concept and functionality.
+
+2. Preserve its original features: application processing, fuzzy identity matching, confidence-based routing, scam checking, consent management, Urdu/English support, voice assistance, offline queue, rule management, digital twin simulation and auditing.
+
+3. Replace the prototype's mock persistence and mock integrations with proper backend implementations.
+
+4. Do not remove functionality just to make the design simpler.
+
+5. Do not produce a frontend-only prototype.
+
+6. Do not hardcode AI responses.
+
+7. Do not pretend external integrations are real when they are not.
+
+8. Never compromise privacy or security for convenience.
+
+9. Use maintainable, modular, properly typed code.
+
+10. Do not stop after creating the homepage or dashboard.
+
+11. Finish the entire end-to-end application, including backend, database, AI, voice and testing.
+
+12. If API keys or credentials are unavailable, implement the integration correctly, provide an `.env.example`, and clearly identify what requires configuration. Never silently substitute fake functionality.
+
+13. After implementation, provide a complete list of working features, mock integrations, required environment variables, database setup instructions, test results and deployment instructions.
+
+**THE FINAL PRODUCT SHOULD FEEL LIKE A REAL, DEPLOYABLE, AI-POWERED PUBLIC SERVICE PLATFORM — NOT A HACKATHON DASHBOARD WITH PRETTY BUTTONS.**
+
+Prioritise functionality, security, accessibility, explainability and exceptional design equally.

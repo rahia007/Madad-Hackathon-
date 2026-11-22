@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #f4efe5;
+    --bg-surface: #faf7f0;
+    --bg-sage: #dce6da;
+    --ink-primary: #202923;
+    --ink-forest: #17372e;
+    --accent-copper: #b77b50;
+    --accent-terracotta: #a94f40;
+    --border-hairline: #ced6cc;
+  }
+
+  html {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--ink-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html[lang='ur'] {
+    font-family: 'Noto Naskh Arabic', 'Manrope', system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  .font-editorial {
+    font-family: 'Playfair Display', Georgia, serif;
+    text-wrap: balance;
+  }
+
+  html[lang='ur'] h1,
+  html[lang='ur'] h2,
+  html[lang='ur'] .font-editorial {
+    font-family: 'Noto Naskh Arabic', 'Playfair Display', serif;
+  }
+
+  .font-mono-tabular {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
